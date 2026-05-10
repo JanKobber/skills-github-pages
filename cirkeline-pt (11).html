@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Cirkeline – Personal Trainer · Bornholm</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Blue & white palette */
+  --blue:#1a3a5c;--blue-mid:#2458a0;--blue-light:#3b82d4;--blue-pale:#dbeafe;--blue-xpale:#f0f7ff;
+  --accent:#e8a030;--accent-light:#fde68a;
+  --ink:#0f1f35;--ink-mid:#3d5270;--ink-light:#8fa3be;
+  --white:#ffffff;--off-white:#f6f9fd;
+  /* Aliases for CMS compat */
+  --sage:var(--blue-mid);--sage-light:var(--blue-light);--sage-pale:var(--blue-pale);
+  --sand:var(--accent);--sand-light:var(--accent-light);
+  --stone:var(--ink);--stone-mid:var(--ink-mid);--stone-light:var(--ink-light);
+  --cream:var(--off-white);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--off-white);color:var(--ink);overflow-x:hidden;cursor:none;}
+
+/* ── CUSTOM CURSOR ── */
+#cursor-ring{
+  position:fixed;
+  width:38px;height:38px;
+  border-radius:50%;
+  border:2px solid rgba(36,88,160,.6);
+  background:rgba(36,88,160,.06);
+  pointer-events:none;
+  z-index:999999;
+  top:0;left:0;
+  transform:translate(-50%,-50%);
+  transition:width .18s ease,height .18s ease,border-color .18s ease,background .18s ease;
+  will-change:transform;
+}
+#cursor-dot{
+  position:fixed;
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--blue-mid);
+  pointer-events:none;
+  z-index:999999;
+  top:0;left:0;
+  transform:translate(-50%,-50%);
+  will-change:transform;
+}
+/* Enlarge ring on hover over interactive elements */
+body.cursor-hover #cursor-ring{
+  width:54px;height:54px;
+  border-color:var(--accent);
+  background:rgba(232,160,48,.08);
+}
+/* Hide native cursor everywhere */
+a,button,input,select,textarea,label,[onclick]{cursor:none!important;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1rem 4rem;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(26,58,92,.1);transition:top .3s;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;letter-spacing:.04em;color:var(--blue);text-decoration:none;display:flex;align-items:center;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid);text-decoration:none;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--blue-mid);}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.nav-cta{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1.4rem;background:var(--blue-mid);color:#fff;text-decoration:none;border-radius:6px;font-weight:600;transition:background .2s,transform .15s;}
+.nav-cta:hover{background:var(--blue);transform:translateY(-1px);}
+.edit-site-btn{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;padding:.45rem .9rem;background:none;border:1px solid rgba(36,88,160,.3);color:var(--ink-mid);cursor:none;border-radius:6px;transition:all .2s;font-family:'Outfit',sans-serif;font-weight:500;}
+.edit-site-btn:hover{border-color:var(--blue-mid);color:var(--blue-mid);}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr;padding-top:90px;overflow:hidden;}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:3.5rem 4rem 3.5rem 5rem;background:var(--off-white);}
+.hero-eyebrow{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:.9rem;display:flex;align-items:center;gap:.75rem;font-weight:600;}
+.hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--accent);border-radius:2px;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4.5vw,4.2rem);font-weight:700;line-height:1.08;color:var(--ink);margin-bottom:1.1rem;}
+h1 em{font-style:italic;color:var(--blue-mid);}
+.hero-desc{font-size:.95rem;line-height:1.7;color:var(--ink-mid);max-width:380px;margin-bottom:1.75rem;font-weight:400;}
+.hero-actions{display:flex;gap:1rem;align-items:center;margin-bottom:1.75rem;}
+.btn-primary{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;padding:.8rem 1.8rem;background:var(--blue-mid);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;transition:background .2s,transform .15s;display:inline-block;}
+.btn-primary:hover{background:var(--blue);transform:translateY(-2px);}
+.btn-ghost{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid);text-decoration:none;display:flex;align-items:center;gap:.5rem;font-weight:500;transition:color .2s;}
+.btn-ghost:hover{color:var(--blue-mid);}
+.btn-ghost::after{content:'→';}
+.hero-stats{display:flex;gap:0;border-top:1px solid rgba(26,58,92,.1);padding-top:1.5rem;}
+.stat{text-align:left;padding-right:2rem;border-right:1px solid rgba(26,58,92,.1);margin-right:2rem;}
+.stat:last-child{border-right:none;margin-right:0;padding-right:0;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--blue-mid);display:block;line-height:1;}
+.stat-label{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid);white-space:nowrap;font-weight:500;margin-top:.2rem;display:block;}
+
+/* Right side — true full-bleed image column */
+.hero-right{display:block;overflow:hidden;}
+.hero-img-wrap{
+  width:100%;height:100%;min-height:calc(100vh - 72px);
+  background:linear-gradient(160deg,var(--blue) 0%,var(--blue-mid) 60%,var(--blue-light) 100%);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.hero-img-wrap img.cms-uploaded{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+}
+.hero-img-ph{font-family:'Playfair Display',serif;font-size:10rem;font-weight:700;color:rgba(255,255,255,.1);user-select:none;position:relative;z-index:1;}
+.hero-deco{position:absolute;bottom:0;right:0;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50% 0 0 0;pointer-events:none;z-index:2;}
+
+/* Upload hint — always visible until image is set */
+.hero-upload-hint{
+  position:absolute;inset:0;z-index:3;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;transition:all .25s;
+}
+.hero-upload-inner{
+  text-align:center;color:rgba(255,255,255,.7);
+  border:2px dashed rgba(255,255,255,.4);border-radius:20px;
+  padding:3rem 4rem;transition:all .25s;
+}
+.hero-upload-icon{font-size:3rem;display:block;margin-bottom:.75rem;}
+.hero-upload-text{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;}
+.hero-img-wrap:hover .hero-upload-inner{color:white;border-color:rgba(255,255,255,.9);background:rgba(26,58,92,.3);}
+.hero-upload-hint.hidden{display:none;}
+
+/* ── SECTIONS ── */
+section{scroll-margin-top:70px;}
+.sec-header{text-align:center;margin-bottom:2.5rem;}
+.eyebrow{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:.75rem;font-weight:600;}
+.eyebrow::before,.eyebrow::after{content:'';width:28px;height:2px;background:var(--accent);border-radius:2px;}
+h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.15;color:var(--ink);}
+h2 em{font-style:italic;color:var(--blue-mid);}
+
+/* ── ABOUT ── */
+#about{padding:4rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;background:#fff;}
+.about-img{aspect-ratio:4/5;background:linear-gradient(160deg,var(--blue-pale),var(--blue-light));border-radius:80px 12px 12px 12px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.about-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.about-img-ph{font-family:'Playfair Display',serif;font-size:5rem;color:rgba(255,255,255,.35);font-weight:700;position:relative;z-index:1;}
+.about-tag{position:absolute;top:2rem;right:-1rem;background:var(--blue-mid);color:white;padding:.65rem 1.4rem;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;border-radius:6px;z-index:2;font-weight:600;}
+.about-body p{font-size:.95rem;line-height:1.8;color:var(--ink-mid);margin-bottom:1rem;}
+.about-body strong{color:var(--ink);font-weight:600;}
+.values{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.5rem;}
+.value{padding:1rem;background:var(--blue-xpale);border-radius:8px;border-left:3px solid var(--blue-mid);}
+.value-t{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:.35rem;font-weight:600;}
+.value-d{font-size:.82rem;color:var(--ink-mid);line-height:1.5;}
+
+/* ── PRICING ── */
+#pricing{padding:4rem 5rem;background:var(--off-white);}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;max-width:1060px;margin:0 auto;}
+.pc{background:#fff;border:1px solid rgba(26,58,92,.1);border-radius:12px;padding:2rem;position:relative;transition:transform .3s,box-shadow .3s;}
+.pc:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(26,58,92,.12);}
+.pc.feat{background:var(--blue-mid);border-color:var(--blue-mid);}
+.pc-badge{position:absolute;top:-.8rem;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--ink);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:.35rem 1rem;border-radius:20px;white-space:nowrap;font-weight:700;}
+.pc-name{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:.75rem;font-weight:600;}
+.feat .pc-name{color:rgba(255,255,255,.65);}
+.pc-price{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--ink);line-height:1;margin-bottom:.25rem;}
+.feat .pc-price{color:white;}
+.pc-price sup{font-size:1rem;vertical-align:super;font-weight:600;font-family:'Outfit',sans-serif;}
+.pc-period{font-size:.8rem;color:var(--ink-light);margin-bottom:1.5rem;}
+.feat .pc-period{color:rgba(255,255,255,.55);}
+.pc-divider{height:1px;background:rgba(26,58,92,.08);margin-bottom:1.25rem;}
+.feat .pc-divider{background:rgba(255,255,255,.15);}
+.pc-features{list-style:none;margin-bottom:1.5rem;}
+.pc-features li{display:flex;align-items:flex-start;gap:.75rem;font-size:.88rem;color:var(--ink-mid);margin-bottom:.7rem;line-height:1.4;}
+.feat .pc-features li{color:rgba(255,255,255,.85);}
+.pc-features li::before{content:'✓';color:var(--blue-mid);font-weight:700;flex-shrink:0;}
+.feat .pc-features li::before{color:var(--accent);}
+.pc-btn{display:block;text-align:center;padding:.8rem;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border-radius:8px;transition:all .2s;font-weight:600;cursor:none;}
+.btn-ol{border:1.5px solid var(--blue-mid);color:var(--blue-mid);}
+.btn-ol:hover{background:var(--blue-mid);color:white;}
+.btn-wh{background:white;color:var(--blue-mid);}
+.btn-wh:hover{background:var(--blue-pale);}
+
+/* ── BOOKING ── */
+#book{padding:4rem 5rem;background:#fff;}
+.book-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:3rem;max-width:1060px;margin:0 auto;}
+.cal-widget{background:var(--off-white);border-radius:12px;padding:1.5rem;border:1px solid rgba(26,58,92,.1);}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;}
+.cal-mo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);}
+.cal-nav-btns{display:flex;gap:.5rem;}
+.cal-nb{width:30px;height:30px;border:1px solid rgba(26,58,92,.2);background:none;border-radius:50%;cursor:none;display:flex;align-items:center;justify-content:center;color:var(--blue-mid);transition:all .2s;}
+.cal-nb:hover{background:var(--blue-mid);color:white;border-color:var(--blue-mid);}
+.cal-dh{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:.4rem;}
+.cal-dn{font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-light);padding:.3rem 0;font-weight:500;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cd{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:.82rem;border-radius:50%;cursor:none;color:var(--ink);transition:all .15s;position:relative;}
+.cd:hover:not(.empty):not(.past){background:var(--blue-pale);}
+.cd.today{font-weight:700;color:var(--blue-mid);}
+.cd.sel{background:var(--blue-mid);color:white;}
+.cd.has-slot::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--accent);}
+.cd.sel::after{background:var(--accent-light);}
+.cd.past{color:var(--ink-light);cursor:default;}
+.cd.empty{cursor:default;}
+.cd.day-off{color:#fff;background:rgba(180,50,50,.18);position:relative;}
+.cd.day-off::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid rgba(180,50,50,.5);}
+body.cms-active .cd.day-off{cursor:none;}
+body.cms-active .cd:not(.past):not(.empty){cursor:none;}
+.slot.bkd-cms{background:rgba(180,50,50,.12);color:#b03030;border-color:rgba(180,50,50,.3);cursor:none;}
+.slot.cms-free{cursor:none;}
+body.cms-active .slot{cursor:none!important;}
+/* CMS calendar banner */
+.cal-cms-banner{background:rgba(36,88,160,.08);border:1px dashed rgba(36,88,160,.3);border-radius:8px;padding:.7rem 1rem;margin-bottom:1rem;font-size:.72rem;color:var(--blue-mid);font-weight:500;text-align:center;display:none;}
+body.cms-active .cal-cms-banner{display:block;}
+.time-slots{margin-top:1.25rem;border-top:1px solid rgba(26,58,92,.08);padding-top:1rem;}
+.slots-t{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:.75rem;font-weight:600;}
+.slots-g{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;}
+.slot{padding:.5rem .25rem;border:1px solid rgba(26,58,92,.15);border-radius:6px;text-align:center;font-size:.78rem;cursor:none;transition:all .15s;color:var(--ink);background:white;}
+.slot:hover{border-color:var(--blue-mid);color:var(--blue-mid);}
+.slot.sel{background:var(--blue-mid);color:white;border-color:var(--blue-mid);}
+.slot.bkd{background:var(--blue-xpale);color:var(--ink-light);cursor:default;border-color:transparent;}
+.bft{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--ink);margin-bottom:.4rem;}
+.bfs{font-size:.88rem;color:var(--ink-mid);margin-bottom:1.5rem;line-height:1.5;}
+.sel-info{background:var(--blue-pale);border-left:3px solid var(--blue-mid);padding:.75rem 1rem;border-radius:0 6px 6px 0;margin-bottom:1.5rem;font-size:.82rem;color:var(--blue-mid);font-weight:500;}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem;}
+.fgg{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.75rem;}
+label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mid);font-weight:600;}
+input,select,textarea{padding:.65rem .9rem;border:1.5px solid rgba(26,58,92,.15);border-radius:8px;background:var(--off-white);color:var(--ink);font-family:'Outfit',sans-serif;font-size:.88rem;transition:border-color .2s;outline:none;}
+input:focus,select:focus,textarea:focus{border-color:var(--blue-mid);background:white;}
+textarea{resize:vertical;min-height:80px;}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232458a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;background-color:var(--off-white);}
+.sub-btn{width:100%;padding:.85rem;background:var(--blue-mid);color:white;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;cursor:none;font-weight:600;transition:background .2s,transform .2s;margin-top:.4rem;}
+.sub-btn:hover{background:var(--blue);transform:translateY(-1px);}
+
+/* ── CONTACT ── */
+#contact{padding:4rem 5rem;background:var(--blue);color:white;}
+.ct-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;max-width:1060px;margin:0 auto;}
+#contact .eyebrow{color:var(--accent);justify-content:flex-start;}
+#contact .eyebrow::before{display:none;}
+#contact .eyebrow::after{background:rgba(232,160,48,.4);}
+#contact h2{color:white;}
+#contact h2 em{color:var(--accent);}
+.ct-desc{font-size:.95rem;line-height:1.75;color:rgba(255,255,255,.65);margin:1rem 0 1.75rem;}
+.ct-item{display:flex;gap:.85rem;margin-bottom:1rem;align-items:flex-start;}
+.ct-icon{width:34px;height:34px;background:rgba(255,255,255,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.85rem;flex-shrink:0;}
+.ct-lbl{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.2rem;font-weight:600;}
+.ct-val{font-size:.88rem;color:rgba(255,255,255,.85);}
+.ct-form{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:2rem;}
+.ct-form input,.ct-form select,.ct-form textarea{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);color:white;border-radius:8px;}
+.ct-form input::placeholder,.ct-form textarea::placeholder{color:rgba(255,255,255,.35);}
+.ct-form input:focus,.ct-form textarea:focus{background:rgba(255,255,255,.15);border-color:var(--accent);}
+.ct-form label{color:rgba(255,255,255,.5);}
+
+footer{padding:1.75rem 5rem;background:#0d2240;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.06);}
+.foot-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:white;letter-spacing:.04em;}
+.foot-copy{font-size:.75rem;color:rgba(255,255,255,.3);}
+.foot-links{display:flex;gap:1.5rem;list-style:none;}
+.foot-links a{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);text-decoration:none;font-weight:500;transition:color .2s;}
+.foot-links a:hover{color:var(--accent);}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;right:2rem;padding:1rem 1.75rem;border-radius:8px;font-size:.9rem;transform:translateY(120px);opacity:0;transition:all .4s cubic-bezier(.16,1,.3,1);z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.2);pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{background:var(--blue-mid);color:white;}
+.toast.info{background:var(--ink);color:white;}
+
+/* ════════════════════════════════════════════
+   TRUE INLINE CMS
+════════════════════════════════════════════ */
+
+/* Login modal */
+.cms-modal-bg{position:fixed;inset:0;background:rgba(10,20,40,.9);z-index:10000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .3s;}
+.cms-modal-bg.show{opacity:1;pointer-events:all;}
+.cms-card{background:white;border-radius:16px;padding:3rem;width:420px;max-width:92vw;box-shadow:0 40px 100px rgba(0,0,0,.4);transform:translateY(20px);transition:transform .3s;}
+.cms-modal-bg.show .cms-card{transform:translateY(0);}
+.cms-logo-text{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--blue-mid);text-align:center;letter-spacing:.04em;margin-bottom:.3rem;}
+.cms-sub{text-align:center;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:2.5rem;font-weight:500;}
+.cms-card label{display:block;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:.4rem;font-weight:600;}
+.cms-card input{width:100%;margin-bottom:1.25rem;background:var(--off-white);}
+.cms-login-btn{width:100%;padding:1rem;background:var(--blue-mid);color:white;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-weight:600;transition:background .2s;}
+.cms-login-btn:hover{background:var(--blue);}
+.cms-err{font-size:.8rem;color:#b03030;text-align:center;margin-top:.85rem;display:none;}
+.cms-hint{text-align:center;font-size:.72rem;color:var(--ink-light);margin-top:1rem;}
+
+/* CMS top bar */
+.cms-topbar{position:fixed;top:0;left:0;right:0;height:48px;background:#0d2240;z-index:5000;display:none;align-items:center;padding:0 1.25rem;gap:1rem;border-bottom:1px solid rgba(59,130,212,.2);}
+.cms-topbar.on{display:flex;}
+.cms-topbar-brand{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--accent);letter-spacing:.04em;white-space:nowrap;margin-right:.5rem;font-weight:700;}
+.cms-topbar-sep{width:1px;height:24px;background:rgba(255,255,255,.1);}
+.cms-mode-info{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);white-space:nowrap;font-weight:500;}
+.cms-topbar-right{margin-left:auto;display:flex;align-items:center;gap:.6rem;}
+.cms-tb-btn{padding:.4rem .9rem;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:600;transition:all .2s;}
+.cms-tb-save{background:var(--blue-mid);color:white;}
+.cms-tb-save:hover{background:var(--blue-light);}
+.cms-tb-logo{background:rgba(232,160,48,.15);color:var(--accent);border:1px solid rgba(232,160,48,.3);}
+.cms-tb-logo:hover{background:rgba(232,160,48,.3);}
+.cms-tb-logout{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);}
+.cms-tb-logout:hover{background:rgba(255,255,255,.15);color:white;}
+.cms-tb-undo{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);}
+.cms-tb-undo:hover{background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);}
+
+body.cms-active{padding-top:48px;}
+body.cms-active nav{top:48px;}
+
+/* EDITABLE elements */
+body.cms-active [data-cms]{position:relative;cursor:pointer;border-radius:4px;transition:outline .15s,background .15s;}
+body.cms-active [data-cms]:hover{outline:2px dashed rgba(36,88,160,.55);outline-offset:4px;}
+body.cms-active [data-cms]:hover::after{
+  content:attr(data-cms-label);
+  position:absolute;top:-26px;left:0;
+  background:var(--blue-mid);color:white;
+  font-family:'Outfit',sans-serif;font-size:10px;letter-spacing:.06em;
+  padding:3px 8px;border-radius:4px;white-space:nowrap;z-index:4000;
+  pointer-events:none;line-height:1.6;font-weight:600;
+}
+body.cms-active [data-cms].editing{outline:2px solid var(--blue-mid)!important;outline-offset:4px;background:rgba(36,88,160,.05);}
+
+/* Inline text editor popup */
+.cms-editor-pop{position:fixed;z-index:8000;background:white;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.22),0 0 0 1px rgba(36,88,160,.12);flex-direction:column;width:420px;max-width:calc(100vw - 24px);display:none;}
+.cms-editor-pop.open{display:flex;}
+.cms-ep-head{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-bottom:1px solid rgba(0,0,0,.06);background:var(--off-white);border-radius:12px 12px 0 0;}
+.cms-ep-title{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid);font-weight:600;}
+.cms-ep-close{width:26px;height:26px;border:none;background:none;cursor:pointer;font-size:1rem;color:var(--ink-mid);border-radius:6px;display:flex;align-items:center;justify-content:center;}
+.cms-ep-close:hover{background:rgba(0,0,0,.07);}
+.cms-ep-body{padding:1rem;}
+.cms-ep-input{width:100%;border:1.5px solid rgba(36,88,160,.2);border-radius:8px;padding:.65rem .85rem;font-family:'Outfit',sans-serif;font-size:.9rem;color:var(--ink);background:white;outline:none;resize:vertical;min-height:60px;transition:border-color .2s;}
+.cms-ep-input:focus{border-color:var(--blue-mid);}
+.cms-ep-foot{display:flex;gap:.5rem;padding:.75rem 1rem;border-top:1px solid rgba(0,0,0,.06);background:var(--off-white);border-radius:0 0 12px 12px;}
+.cms-ep-apply{flex:1;padding:.6rem;background:var(--blue-mid);color:white;border:none;border-radius:6px;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:600;transition:background .2s;}
+.cms-ep-apply:hover{background:var(--blue);}
+.cms-ep-cancel{padding:.6rem 1rem;background:none;border:1.5px solid rgba(36,88,160,.2);color:var(--ink-mid);border-radius:6px;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:500;transition:all .2s;}
+.cms-ep-cancel:hover{border-color:var(--ink-mid);}
+.cms-ep-toolbar{display:flex;gap:.25rem;padding:.5rem 1rem;border-bottom:1px solid rgba(0,0,0,.06);}
+.cms-ep-tb-btn{padding:.3rem .55rem;background:none;border:1px solid rgba(36,88,160,.15);border-radius:4px;cursor:pointer;font-size:.78rem;color:var(--ink-mid);transition:all .15s;}
+.cms-ep-tb-btn:hover{background:var(--blue-pale);border-color:var(--blue-mid);color:var(--blue-mid);}
+
+/* Image upload zone (cms hover overlay for about image) */
+.cms-img-zone{position:absolute;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(26,58,92,.85);cursor:pointer;border-radius:inherit;}
+body.cms-active .img-editable:hover .cms-img-zone{display:flex;}
+.cms-img-zone-inner{text-align:center;color:white;}
+.cms-img-zone-icon{font-size:2rem;display:block;margin-bottom:.4rem;}
+.cms-img-zone-text{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.img-editable{position:relative;}
+
+/* Feature list editor */
+.feat-editor{display:none;background:white;border:1px solid rgba(36,88,160,.15);border-radius:8px;padding:1rem;margin-top:.5rem;}
+.feat-editor.open{display:block;}
+.feat-item{display:flex;gap:.5rem;margin-bottom:.5rem;align-items:center;}
+.feat-item input{flex:1;padding:.5rem .75rem;font-size:.85rem;}
+.feat-rm{width:28px;height:28px;background:none;border:1px solid rgba(200,50,50,.25);color:#b03030;border-radius:6px;cursor:pointer;font-size:.9rem;flex-shrink:0;}
+.feat-rm:hover{background:#fde8e8;}
+.feat-add{width:100%;padding:.5rem;background:var(--blue-xpale);border:1.5px dashed rgba(36,88,160,.25);color:var(--blue-mid);border-radius:6px;font-size:.78rem;cursor:pointer;margin-top:.25rem;transition:all .2s;font-weight:500;}
+.feat-add:hover{background:var(--blue-mid);color:white;border-style:solid;}
+
+/* Color picker */
+.cms-color-pop{position:fixed;z-index:8500;background:white;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.18);padding:1.25rem;display:none;gap:.75rem;flex-wrap:wrap;width:240px;}
+.cms-color-pop.open{display:flex;}
+.cms-color-pop-title{width:100%;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid);margin-bottom:.25rem;font-weight:600;}
+.cms-swatch{width:36px;height:36px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:all .15s;}
+.cms-swatch:hover{transform:scale(1.12);border-color:rgba(0,0,0,.15);}
+.cms-swatch.active{border-color:var(--ink);}
+
+/* Pricing edit btn */
+.pc-edit-overlay{position:absolute;inset:0;background:rgba(36,88,160,.03);border:2px dashed rgba(36,88,160,.25);border-radius:12px;display:none;z-index:10;pointer-events:none;}
+body.cms-active .pc:hover .pc-edit-overlay{display:block;}
+.pc-edit-btn{position:absolute;top:.75rem;right:.75rem;padding:.35rem .75rem;background:var(--blue-mid);color:white;border:none;border-radius:6px;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;z-index:20;pointer-events:all;display:none;font-family:'Outfit',sans-serif;font-weight:600;}
+body.cms-active .pc:hover .pc-edit-btn{display:block;}
+
+/* Responsive */
+@media(max-width:900px){
+  nav{padding:1rem 2rem;}
+  .nav-links{display:none;}
+  .hero{grid-template-columns:1fr;min-height:auto;}
+  .hero-left{padding:3rem 2rem 2.5rem;}
+  .hero-right{height:60vw;min-height:320px;}
+  .hero-img-wrap{min-height:100%;}
+  .hero-stats{flex-wrap:wrap;gap:0;padding-top:1.25rem;}
+  .stat{padding-right:1.5rem;margin-right:1.5rem;}
+  #about{grid-template-columns:1fr;padding:3rem 2rem;gap:2rem;}
+  .about-img{aspect-ratio:3/2;border-radius:40px 8px 8px 8px;}
+  #pricing{padding:3rem 2rem;}
+  .pricing-grid{grid-template-columns:1fr;}
+  #book{padding:3rem 2rem;}
+  .book-wrap{grid-template-columns:1fr;gap:2rem;}
+  #contact{padding:3rem 2rem;}
+  .ct-grid{grid-template-columns:1fr;gap:2rem;}
+  footer{flex-direction:column;gap:1rem;padding:1.5rem 2rem;text-align:center;}
+  .foot-links{justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+
+<!-- ═══ CMS LOGIN MODAL ═══ -->
+<div class="cms-modal-bg" id="cmsModal">
+  <div class="cms-card">
+    <div class="cms-logo-text">Cirkeline CMS</div>
+    <div class="cms-sub">Log ind for at redigere din hjemmeside</div>
+    <label>Brugernavn</label>
+    <input type="text" id="cmsU" placeholder="admin" autocomplete="username">
+    <label>Adgangskode</label>
+    <input type="password" id="cmsP" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="cms-login-btn" onclick="doLogin()">Log ind →</button>
+    <div class="cms-err" id="cmsErr">Forkert brugernavn eller adgangskode</div>
+    <div class="cms-hint">Demo: <b>admin</b> / <b>cirkeline2026</b></div>
+  </div>
+</div>
+
+<!-- ═══ CMS TOPBAR ═══ -->
+<div class="cms-topbar" id="cmsTopbar">
+  <span class="cms-topbar-brand">⚙ CMS</span>
+  <div class="cms-topbar-sep"></div>
+  <span class="cms-mode-info">Klik på et element for at redigere det</span>
+  <div class="cms-topbar-right">
+    <button class="cms-tb-btn cms-tb-logo" onclick="triggerImgUpload('logo')" title="Upload logo billede">🖼 Logo</button>
+    <button class="cms-tb-btn cms-tb-undo" onclick="doUndo()" title="Fortryd (Ctrl+Z)">↩ Fortryd</button>
+    <button class="cms-tb-btn cms-tb-save" onclick="saveAll()">💾 Gem alt</button>
+    <button class="cms-tb-btn cms-tb-logout" onclick="doLogout()">Log ud</button>
+  </div>
+</div>
+
+<!-- ═══ INLINE TEXT EDITOR POPUP ═══ -->
+<div class="cms-editor-pop" id="editorPop">
+  <div class="cms-ep-head">
+    <span class="cms-ep-title" id="epTitle">Rediger tekst</span>
+    <button class="cms-ep-close" onclick="closeEditor()">✕</button>
+  </div>
+  <div class="cms-ep-toolbar" id="epToolbar" style="display:none">
+    <button class="cms-ep-tb-btn" onclick="wrapTag('em')" title="Kursiv">I</button>
+    <button class="cms-ep-tb-btn" onclick="wrapTag('strong')" title="Fed">B</button>
+    <button class="cms-ep-tb-btn" onclick="wrapTag('br','')">⏎ Linjeskift</button>
+  </div>
+  <div class="cms-ep-body">
+    <textarea class="cms-ep-input" id="epInput" rows="3"></textarea>
+  </div>
+  <div class="cms-ep-foot">
+    <button class="cms-ep-cancel" onclick="closeEditor()">Annuller</button>
+    <button class="cms-ep-apply" onclick="applyEdit()">Anvend ændring</button>
+  </div>
+</div>
+
+<!-- ═══ IMAGE UPLOAD INPUT ═══ -->
+<input type="file" id="imgFileInput" accept="image/*" style="display:none" onchange="handleImageUpload(this)">
+
+<!-- ═══ WEBSITE ═══ -->
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" id="siteLogoLink">
+    <img id="siteLogoImg" src="" alt="Cirkeline" style="display:none;height:72px;max-width:280px;object-fit:contain;">
+    <span id="siteLogo" data-cms="siteLogo" data-cms-label="Logo tekst" data-cms-type="text">Cirkeline</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Om mig</a></li>
+    <li><a href="#pricing">Priser</a></li>
+    <li><a href="#book">Book tid</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="edit-site-btn" id="editSiteBtn" onclick="showLogin()">✏ Rediger side</button>
+    <a href="#book" class="nav-cta" data-cms="navCta" data-cms-label="Knap tekst" data-cms-type="text" id="navCta">Book en tid</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow" data-cms="heroEyebrow" data-cms-label="Øjenbryn" data-cms-type="text" id="heroEyebrow">Personal Trainer · Bornholm</div>
+    <h1 data-cms="heroH1" data-cms-label="Overskrift (HTML)" data-cms-type="html" id="heroH1">Stærk. Sund.<br><em>Dig selv.</em></h1>
+    <p class="hero-desc" data-cms="heroDesc" data-cms-label="Beskrivelse" data-cms-type="text" id="heroDesc">Personlig træning tilpasset dig – på Bornholms smukke natur og i dit eget tempo. Jeg hjælper dig med at nå dine mål og finde glæden ved bevægelse.</p>
+    <div class="hero-actions">
+      <a href="#book" class="btn-primary" data-cms="heroBtnP" data-cms-label="Knap tekst" data-cms-type="text" id="heroBtnP">Book din første session</a>
+      <a href="#about" class="btn-ghost" data-cms="heroBtnG" data-cms-label="Link tekst" data-cms-type="text" id="heroBtnG">Læs om mig</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num" data-cms="s1n" data-cms-label="Tal" data-cms-type="text" id="s1n">8+</span>
+        <span class="stat-label" data-cms="s1l" data-cms-label="Label" data-cms-type="text" id="s1l">Års erfaring</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" data-cms="s2n" data-cms-label="Tal" data-cms-type="text" id="s2n">200+</span>
+        <span class="stat-label" data-cms="s2l" data-cms-label="Label" data-cms-type="text" id="s2l">Tilfredse klienter</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" data-cms="s3n" data-cms-label="Tal" data-cms-type="text" id="s3n">∞</span>
+        <span class="stat-label" data-cms="s3l" data-cms-label="Label" data-cms-type="text" id="s3l">Motivation</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap img-editable" id="heroImgWrap" onclick="triggerImgUpload('hero')">
+      <div class="hero-img-ph" id="heroImgPh">C</div>
+      <div class="hero-upload-hint" id="heroUploadHint">
+        <div class="hero-upload-inner">
+          <span class="hero-upload-icon">🖼</span>
+          <span class="hero-upload-text">Klik for at uploade billede</span>
+        </div>
+      </div>
+      <div class="cms-img-zone">
+        <div class="cms-img-zone-inner">
+          <span class="cms-img-zone-icon">🖼</span>
+          <span class="cms-img-zone-text">Skift billede</span>
+        </div>
+      </div>
+      <div class="hero-deco"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img img-editable" id="aboutImgWrap" onclick="triggerImgUpload('about')">
+    <div class="about-img-ph" id="aboutImgPh">♡</div>
+    <div class="about-tag" data-cms="aboutTag" data-cms-label="Mærke på billede" data-cms-type="text" id="aboutTag">Certificeret PT</div>
+    <div class="cms-img-zone">
+      <div class="cms-img-zone-inner">
+        <span class="cms-img-zone-icon">🖼</span>
+        <span class="cms-img-zone-text">Skift profilbillede</span>
+      </div>
+    </div>
+  </div>
+  <div class="about-body">
+    <div class="eyebrow" data-cms="aboutEyebrow" data-cms-label="Øjenbryn" data-cms-type="text" id="aboutEyebrow">Om Cirkeline</div>
+    <h2 style="margin-bottom:1.5rem" data-cms="aboutH2" data-cms-label="Overskrift (HTML)" data-cms-type="html" id="aboutH2">Træning der<br>passer til <em>dit liv</em></h2>
+    <p data-cms="aboutP1" data-cms-label="Afsnit 1 (HTML)" data-cms-type="html" id="aboutP1">Hej! Jeg er Cirkeline, og jeg er passioneret personal trainer med base på det smukke Bornholm. Mit mål er at hjælpe dig med at opdage din indre styrke – uanset om du er nybegynder eller erfaren.</p>
+    <p data-cms="aboutP2" data-cms-label="Afsnit 2 (HTML)" data-cms-type="html" id="aboutP2">Jeg tror på, at <strong>bevægelse skal være en glæde</strong>, ikke en straf. Hver træningsplan jeg laver er personligt skræddersyet, og vi arbejder i dit tempo med respekt for din krop og dine mål.</p>
+    <p data-cms="aboutP3" data-cms-label="Afsnit 3" data-cms-type="text" id="aboutP3">Vi kan træne udendørs i Bornholms fantastiske natur – ved klipperne, i skoven eller på stranden – eller indendørs efter din præference.</p>
+    <div class="values">
+      <div class="value">
+        <div class="value-t" data-cms="v1t" data-cms-label="Boks 1 titel" data-cms-type="text" id="v1t">Personlig plan</div>
+        <div class="value-d" data-cms="v1d" data-cms-label="Boks 1 tekst" data-cms-type="text" id="v1d">Individuelt tilpasset til dine mål og niveau</div>
+      </div>
+      <div class="value">
+        <div class="value-t" data-cms="v2t" data-cms-label="Boks 2 titel" data-cms-type="text" id="v2t">Fleksibilitet</div>
+        <div class="value-d" data-cms="v2d" data-cms-label="Boks 2 tekst" data-cms-type="text" id="v2d">Udendørs i naturen eller indendørs – du vælger</div>
+      </div>
+      <div class="value">
+        <div class="value-t" data-cms="v3t" data-cms-label="Boks 3 titel" data-cms-type="text" id="v3t">Holistisk tilgang</div>
+        <div class="value-d" data-cms="v3d" data-cms-label="Boks 3 tekst" data-cms-type="text" id="v3d">Krop, sind og vaner for et bæredygtigt liv</div>
+      </div>
+      <div class="value">
+        <div class="value-t" data-cms="v4t" data-cms-label="Boks 4 titel" data-cms-type="text" id="v4t">Bornholmsk rødder</div>
+        <div class="value-d" data-cms="v4d" data-cms-label="Boks 4 tekst" data-cms-type="text" id="v4d">Lokal, tryg og tilgængelig over hele øen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="sec-header">
+    <div class="eyebrow">Prisoversigt</div>
+    <h2 data-cms="pricingH" data-cms-label="Pris-overskrift (HTML)" data-cms-type="html" id="pricingH">Find den pakke<br>der passer til <em>dig</em></h2>
+  </div>
+  <div class="pricing-grid">
+    <!-- PLAN 1 -->
+    <div class="pc" style="position:relative">
+      <div class="pc-edit-btn" onclick="editPlan(1)">✏ Rediger pakke</div>
+      <div class="pc-name" data-cms="p1n" data-cms-label="Pakkenavn" data-cms-type="text" id="p1n">Enkelttime</div>
+      <div class="pc-price"><sup>kr</sup><span data-cms="p1p" data-cms-label="Pris" data-cms-type="text" id="p1p">650</span></div>
+      <div class="pc-period" data-cms="p1per" data-cms-label="Periode" data-cms-type="text" id="p1per">per session</div>
+      <div class="pc-divider"></div>
+      <ul class="pc-features" id="p1f">
+        <li>60 minutters personlig træning</li>
+        <li>Opvarmning og nedkøling</li>
+        <li>Vejledning og teknik</li>
+        <li>Udendørs eller indendørs</li>
+      </ul>
+      <a href="#book" class="pc-btn btn-ol">Book tid</a>
+    </div>
+    <!-- PLAN 2 FEATURED -->
+    <div class="pc feat" style="position:relative">
+      <div class="pc-edit-btn" onclick="editPlan(2)">✏ Rediger pakke</div>
+      <div class="pc-badge" data-cms="p2b" data-cms-label="Badge tekst" data-cms-type="text" id="p2b">Mest populær</div>
+      <div class="pc-name" data-cms="p2n" data-cms-label="Pakkenavn" data-cms-type="text" id="p2n">Månedspakke</div>
+      <div class="pc-price"><sup>kr</sup><span data-cms="p2p" data-cms-label="Pris" data-cms-type="text" id="p2p">1.950</span></div>
+      <div class="pc-period" data-cms="p2per" data-cms-label="Periode" data-cms-type="text" id="p2per">per måned · 4 sessioner</div>
+      <div class="pc-divider"></div>
+      <ul class="pc-features" id="p2f">
+        <li>4 × 60 min personlig træning</li>
+        <li>Individuel træningsplan</li>
+        <li>Kostvejledning og tips</li>
+        <li>WhatsApp support løbende</li>
+        <li>Progressionsmåling</li>
+      </ul>
+      <a href="#book" class="pc-btn btn-wh">Book månedspakke</a>
+    </div>
+    <!-- PLAN 3 -->
+    <div class="pc" style="position:relative">
+      <div class="pc-edit-btn" onclick="editPlan(3)">✏ Rediger pakke</div>
+      <div class="pc-name" data-cms="p3n" data-cms-label="Pakkenavn" data-cms-type="text" id="p3n">Intensivt forløb</div>
+      <div class="pc-price"><sup>kr</sup><span data-cms="p3p" data-cms-label="Pris" data-cms-type="text" id="p3p">5.400</span></div>
+      <div class="pc-period" data-cms="p3per" data-cms-label="Periode" data-cms-type="text" id="p3per">3 måneder · 12 sessioner</div>
+      <div class="pc-divider"></div>
+      <ul class="pc-features" id="p3f">
+        <li>12 × 60 min personlig træning</li>
+        <li>Fuldt skræddersyet program</li>
+        <li>Ernæringsplan inkluderet</li>
+        <li>Løbende coaching og opfølgning</li>
+        <li>Body assessment start/slut</li>
+        <li>Ubegrænset support</li>
+      </ul>
+      <a href="#book" class="pc-btn btn-ol">Start forløb</a>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:2rem;font-size:.85rem;color:var(--stone-mid);" data-cms="priceNote" data-cms-label="Note under priser" data-cms-type="text" id="priceNote">Første konsultation er gratis · Priser er inkl. moms · Rejseomkostninger kan forekomme</p>
+</section>
+
+<!-- BOOKING -->
+<section id="book">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="sec-header">
+      <div class="eyebrow">Book en tid</div>
+      <h2>Vælg din <em>session</em></h2>
+    </div>
+    <div class="book-wrap">
+      <div>
+        <div class="cal-widget">
+          <div class="cal-cms-banner">✏ CMS-tilstand — klik en dag for at blokere/frigive · Vælg derefter tider</div>
+          <div class="cal-head">
+            <div class="cal-mo" id="calLabel">Maj 2026</div>
+            <div class="cal-nav-btns">
+              <button class="cal-nb" onclick="changeMonth(-1)">←</button>
+              <button class="cal-nb" onclick="changeMonth(1)">→</button>
+            </div>
+          </div>
+          <div class="cal-dh">
+            <div class="cal-dn">Ma</div><div class="cal-dn">Ti</div><div class="cal-dn">On</div>
+            <div class="cal-dn">To</div><div class="cal-dn">Fr</div><div class="cal-dn">Lø</div><div class="cal-dn">Sø</div>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div class="time-slots" id="timeSlots" style="display:none">
+            <div class="slots-t">Ledige tider</div>
+            <div class="slots-g" id="slotsG"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="bft" data-cms="bookTitle" data-cms-label="Booking titel" data-cms-type="text" id="bookTitle">Bekræft din booking</div>
+        <p class="bfs" data-cms="bookSub" data-cms-label="Booking undertekst" data-cms-type="text" id="bookSub">Vælg en dato i kalenderen og udfyld dine oplysninger. Jeg bekræfter din booking inden for 24 timer.</p>
+        <div class="sel-info" id="selInfo" style="display:none"></div>
+        <div class="fg">
+          <div class="fgg"><label>Fornavn</label><input type="text" placeholder="Anna"></div>
+          <div class="fgg"><label>Efternavn</label><input type="text" placeholder="Larsen"></div>
+        </div>
+        <div class="fgg"><label>E-mail</label><input type="email" placeholder="anna@eksempel.dk"></div>
+        <div class="fgg"><label>Telefon</label><input type="tel" placeholder="+45 12 34 56 78"></div>
+        <div class="fgg">
+          <label>Pakke</label>
+          <select><option>Vælg pakke...</option><option>Enkelttime – kr 650</option><option>Månedspakke – kr 1.950</option><option>Intensivt forløb – kr 5.400</option><option>Gratis konsultation</option></select>
+        </div>
+        <div class="fgg"><label>Besked (valgfri)</label><textarea placeholder="Fortæl mig om dine mål..."></textarea></div>
+        <button class="sub-btn" onclick="submitBooking()">Bekræft booking</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="ct-grid">
+    <div>
+      <div class="eyebrow" data-cms="ctEyebrow" data-cms-label="Øjenbryn" data-cms-type="text" id="ctEyebrow">Kontakt</div>
+      <h2 data-cms="ctH2" data-cms-label="Overskrift (HTML)" data-cms-type="html" id="ctH2">Lad os <em>tale<br>sammen</em></h2>
+      <p class="ct-desc" data-cms="ctDesc" data-cms-label="Beskrivelse" data-cms-type="text" id="ctDesc">Har du spørgsmål eller er du i tvivl om, hvilken pakke der passer til dig? Send mig en besked – jeg svarer inden for ét arbejdsdøgn.</p>
+      <div class="ct-item"><div class="ct-icon">✉</div><div><div class="ct-lbl">E-mail</div><div class="ct-val" data-cms="ctEmail" data-cms-label="E-mail" data-cms-type="text" id="ctEmail">cirkeline@bornholmfit.dk</div></div></div>
+      <div class="ct-item"><div class="ct-icon">✆</div><div><div class="ct-lbl">Telefon</div><div class="ct-val" data-cms="ctPhone" data-cms-label="Telefon" data-cms-type="text" id="ctPhone">+45 56 XX XX XX</div></div></div>
+      <div class="ct-item"><div class="ct-icon">◎</div><div><div class="ct-lbl">Placering</div><div class="ct-val" data-cms="ctLoc" data-cms-label="Placering" data-cms-type="text" id="ctLoc">Bornholm, Danmark</div></div></div>
+      <div class="ct-item"><div class="ct-icon">◷</div><div><div class="ct-lbl">Åbningstider</div><div class="ct-val" data-cms="ctHours" data-cms-label="Åbningstider (HTML)" data-cms-type="html" id="ctHours">Man–Fre: 06:00–20:00<br>Lør–Søn: 08:00–16:00</div></div></div>
+    </div>
+    <div>
+      <div class="ct-form">
+        <div class="fg">
+          <div class="fgg"><label>Navn</label><input type="text" placeholder="Dit navn"></div>
+          <div class="fgg"><label>Telefon</label><input type="tel" placeholder="+45..."></div>
+        </div>
+        <div class="fgg"><label>E-mail</label><input type="email" placeholder="din@email.dk"></div>
+        <div class="fgg">
+          <label>Emne</label>
+          <select style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:white;">
+            <option style="background:#3a3630">Hvad handler det om?</option>
+            <option style="background:#3a3630">Generelt spørgsmål</option>
+            <option style="background:#3a3630">Prisforespørgsel</option>
+            <option style="background:#3a3630">Samarbejde / virksomhed</option>
+          </select>
+        </div>
+        <div class="fgg"><label>Din besked</label><textarea placeholder="Skriv dit spørgsmål her..."></textarea></div>
+        <button class="sub-btn" onclick="submitContact()" style="background:var(--sage-light);color:var(--stone);">Send besked</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo" data-cms="footLogo" data-cms-label="Logo i footer" data-cms-type="text" id="footLogo">Cirkeline</div>
+  <div class="foot-copy" data-cms="footCopy" data-cms-label="Copyright tekst" data-cms-type="text" id="footCopy">© 2026 Cirkeline Personal Training · Bornholm</div>
+  <ul class="foot-links">
+    <li><a href="#about">Om mig</a></li>
+    <li><a href="#pricing">Priser</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+  </ul>
+</footer>
+
+<!-- PLAN EDITOR MODAL -->
+<div class="cms-modal-bg" id="planModal" style="z-index:9000">
+  <div class="cms-card" style="max-width:480px;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;" id="planModalTitle">Rediger pakke</div>
+      <button onclick="closePlanModal()" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--stone-mid);">✕</button>
+    </div>
+    <div id="planModalBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════
+   CALENDAR
+═══════════════════════════ */
+// cmsOn declared early so calendar click handlers can reference it
+let cmsOn=false;
+let cYr=2026,cMo=4,selDay=null,selMo=null,selYr=null,selTime=null;
+const MN=['Januar','Februar','Marts','April','Maj','Juni','Juli','August','September','Oktober','November','December'];
+const times=['16:00','17:00','18:00','19:00','20:00','21:00','22:00'];
+
+// Blocked data — persisted in localStorage under 'cirkeline_blocked'
+// Structure: { "2026-05-15": ["17:00","18:00"], "2026-05-20": "DAY" }
+// Value "DAY" = whole day blocked. Array = specific blocked times.
+let blocked = JSON.parse(localStorage.getItem('cirkeline_blocked')||'{}');
+function saveBlocked(){localStorage.setItem('cirkeline_blocked',JSON.stringify(blocked));}
+function dayKey(y,m,d){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');}
+function isDayBlocked(y,m,d){return blocked[dayKey(y,m,d)]==='DAY';}
+function isTimeBlocked(y,m,d,t){const k=dayKey(y,m,d);return blocked[k]==='DAY'||(Array.isArray(blocked[k])&&blocked[k].includes(t));}
+
+function drawCal(){
+  document.getElementById('calLabel').textContent=MN[cMo]+' '+cYr;
+  const g=document.getElementById('calGrid');g.innerHTML='';
+  const fd=new Date(cYr,cMo,1).getDay(),dim=new Date(cYr,cMo+1,0).getDate();
+  const off=fd===0?6:fd-1,td=new Date();
+  for(let i=0;i<off;i++){const e=document.createElement('div');e.className='cd empty';g.appendChild(e);}
+  for(let d=1;d<=dim;d++){
+    const c=document.createElement('div');c.className='cd';c.textContent=d;
+    const cd=new Date(cYr,cMo,d);
+    const past=cd<new Date(td.getFullYear(),td.getMonth(),td.getDate());
+    const dayOff=isDayBlocked(cYr,cMo,d);
+    if(past)c.classList.add('past');
+    else if(dayOff)c.classList.add('day-off');
+    else c.classList.add('has-slot');
+    if(d===td.getDate()&&cMo===td.getMonth()&&cYr===td.getFullYear())c.classList.add('today');
+    if(d===selDay&&cMo===selMo&&cYr===selYr)c.classList.add('sel');
+    if(!past&&!dayOff)c.onclick=()=>pickDay(d);
+    // CMS mode: click blocked days to unblock
+    if(!past&&dayOff&&cmsOn)c.onclick=()=>cmsToggleDay(d);
+    g.appendChild(c);
+  }
+}
+function pickDay(d){
+  if(cmsOn){cmsPickDay(d);return;}
+  selDay=d;selMo=cMo;selYr=cYr;selTime=null;drawCal();drawSlots();
+}
+function drawSlots(){
+  document.getElementById('timeSlots').style.display='block';
+  const g=document.getElementById('slotsG');g.innerHTML='';
+  times.forEach(t=>{
+    const s=document.createElement('div');s.className='slot';s.textContent=t;
+    const tbkd=isTimeBlocked(cYr,cMo,selDay,t);
+    if(tbkd){
+      s.classList.add('bkd');s.title='Optaget';
+      if(cmsOn){s.title='Klik for at fjerne blokering';s.classList.add('bkd-cms');s.onclick=()=>cmsToggleTime(t);}
+    } else {
+      if(cmsOn){s.classList.add('cms-free');s.onclick=()=>cmsToggleTime(t);}
+      else s.onclick=()=>pickTime(t,s);
+    }
+    g.appendChild(s);
+  });
+}
+function pickTime(t,el){
+  document.querySelectorAll('.slot').forEach(s=>s.classList.remove('sel'));
+  el.classList.add('sel');selTime=t;
+  const i=document.getElementById('selInfo');
+  i.textContent='📅 '+selDay+'. '+MN[selMo]+' '+selYr+' kl. '+t;
+  i.style.display='block';
+}
+function changeMonth(d){cMo+=d;if(cMo>11){cMo=0;cYr++;}if(cMo<0){cMo=11;cYr--;}drawCal();document.getElementById('timeSlots').style.display='none';}
+drawCal();
+
+/* ── CMS CALENDAR MANAGEMENT ── */
+function cmsPickDay(d){
+  selDay=d;selMo=cMo;selYr=cYr;selTime=null;
+  drawCal();
+  document.getElementById('timeSlots').style.display='block';
+  drawSlots();
+  renderCmsDayPanel();
+}
+function renderCmsDayPanel(){
+  const k=dayKey(cYr,cMo,selDay);
+  const isDayOff=blocked[k]==='DAY';
+  let panel=document.getElementById('cmsDayPanel');
+  if(!panel){panel=document.createElement('div');panel.id='cmsDayPanel';document.getElementById('timeSlots').before(panel);}
+  panel.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;padding:.65rem .85rem;background:${isDayOff?'rgba(180,50,50,.08)':'var(--blue-xpale)'};border-radius:8px;border:1px solid ${isDayOff?'rgba(180,50,50,.25)':'rgba(36,88,160,.15)'};">
+    <span style="font-size:.72rem;font-weight:600;color:${isDayOff?'#b03030':'var(--blue-mid)'};">${isDayOff?'🔴 Hele dagen blokeret':'🟢 Dagen er åben'}</span>
+    <button onclick="cmsToggleDay(${selDay})" style="font-size:.66rem;padding:.32rem .75rem;background:${isDayOff?'#b03030':'var(--blue-mid)'};color:white;border:none;border-radius:6px;cursor:none;font-family:'Outfit',sans-serif;font-weight:600;">${isDayOff?'Åbn dag':'Bloker hele dag'}</button>
+  </div>`;
+}
+function cmsToggleDay(d){
+  const k=dayKey(cYr,cMo,d);
+  if(blocked[k]==='DAY'){delete blocked[k];}else{blocked[k]='DAY';}
+  saveBlocked();selDay=d;selMo=cMo;selYr=cYr;
+  drawCal();document.getElementById('timeSlots').style.display='block';
+  drawSlots();renderCmsDayPanel();
+  const nowBlocked=blocked[dayKey(cYr,cMo,d)]==='DAY';
+  showToast(nowBlocked?'🔴 Dag blokeret – fri dag':'🟢 Dag åbnet igen','info');
+}
+function cmsToggleTime(t){
+  if(!selDay)return;
+  const k=dayKey(cYr,cMo,selDay);
+  if(blocked[k]==='DAY')return;
+  if(!Array.isArray(blocked[k]))blocked[k]=[];
+  const idx=blocked[k].indexOf(t);
+  if(idx>-1){blocked[k].splice(idx,1);if(blocked[k].length===0)delete blocked[k];}
+  else{blocked[k].push(t);}
+  saveBlocked();drawSlots();
+  const nowBkd=Array.isArray(blocked[dayKey(cYr,cMo,selDay)])&&blocked[dayKey(cYr,cMo,selDay)].includes(t);
+  showToast(nowBkd?'🔴 '+t+' blokeret':'🟢 '+t+' frigivet','info');
+}
+function submitBooking(){showToast('✓ Tak! Din booking er modtaget – jeg vender tilbage inden for 24 timer.','success');}
+function submitContact(){showToast('✓ Besked sendt! Jeg svarer dig hurtigst muligt.','success');}
+window.addEventListener('scroll',()=>{
+  let c='';document.querySelectorAll('section[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.id;});
+  document.querySelectorAll('.nav-links a').forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--sage)':'';});
+});
+
+/* ═══════════════════════════
+   TOAST
+═══════════════════════════ */
+function showToast(msg,type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+type;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+/* ═══════════════════════════
+   CMS ENGINE
+═══════════════════════════ */
+const CMS_U='admin',CMS_P='cirkeline2026';
+let D=JSON.parse(localStorage.getItem('cirkeline_v3')||'{}');
+let history=[],historyIndex=-1;
+let currentEditEl=null,currentEditKey=null;
+
+/* Apply all saved data on load */
+(function boot(){
+  Object.entries(D).forEach(([k,v])=>{
+    if(k==='heroImg')return setImg('hero',v);
+    if(k==='aboutImg')return setImg('about',v);
+    if(k==='logoImg')return setLogoImg(v);
+    const el=document.getElementById(k);if(!el)return;
+    const attr=el.getAttribute('data-cms-type');
+    if(attr==='html')el.innerHTML=v;else el.textContent=v;
+    if(k==='siteLogo')document.getElementById('footLogo').textContent=v;
+  });
+})();
+
+function setImg(type,src){
+  const wrap=document.getElementById(type==='hero'?'heroImgWrap':'aboutImgWrap');
+  const ph=document.getElementById(type==='hero'?'heroImgPh':'aboutImgPh');
+  let img=wrap.querySelector('img.cms-uploaded');
+  if(!img){img=document.createElement('img');img.className='cms-uploaded';wrap.insertBefore(img,wrap.firstChild);}
+  img.src=src;
+  img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;';
+  if(ph)ph.style.display='none';
+  // Hide the "klik for at uploade" hint when image is set
+  if(type==='hero'){
+    const hint=document.getElementById('heroUploadHint');
+    if(hint)hint.classList.add('hidden');
+  }
+}
+
+function setLogoImg(src){
+  const img=document.getElementById('siteLogoImg');
+  const txt=document.getElementById('siteLogo');
+  img.src=src;
+  img.style.display='block';
+  txt.style.display='none';
+  // Also hide the footer text logo in favor of keeping footer as text (logos in nav only)
+}
+
+/* LOGIN */
+function showLogin(){document.getElementById('cmsModal').classList.add('show');}
+function doLogin(){
+  const u=document.getElementById('cmsU').value.trim();
+  const p=document.getElementById('cmsP').value;
+  if(u===CMS_U&&p===CMS_P){
+    document.getElementById('cmsModal').classList.remove('show');
+    activateCMS();
+  }else{
+    const e=document.getElementById('cmsErr');e.style.display='block';
+    setTimeout(()=>e.style.display='none',3000);
+  }
+}
+function activateCMS(){
+  cmsOn=true;
+  document.getElementById('cmsTopbar').classList.add('on');
+  document.getElementById('editSiteBtn').style.display='none';
+  document.body.classList.add('cms-active');
+  attachEditors();
+  drawCal(); // refresh to show CMS calendar state
+  showToast('✓ Logget ind. Klik tekst for at redigere · Brug kalenderen til at blokere dage/tider.','info');
+}
+function doLogout(){
+  cmsOn=false;
+  document.getElementById('cmsTopbar').classList.remove('on');
+  document.getElementById('editSiteBtn').style.display='';
+  document.body.classList.remove('cms-active');
+  closeEditor();
+  document.querySelectorAll('[data-cms]').forEach(el=>el.classList.remove('editing'));
+  const dp=document.getElementById('cmsDayPanel');if(dp)dp.remove();
+  drawCal(); // refresh to normal customer view
+}
+
+/* ATTACH CLICK LISTENERS */
+function attachEditors(){
+  document.querySelectorAll('[data-cms]').forEach(el=>{
+    el.addEventListener('click',function(e){
+      if(!cmsOn)return;
+      // Don't capture clicks on img-editable (those go to image upload)
+      if(this.closest('.img-editable')&&!this.hasAttribute('data-cms'))return;
+      e.stopPropagation();
+      openEditor(this);
+    });
+  });
+}
+
+/* OPEN INLINE EDITOR */
+function openEditor(el){
+  if(!cmsOn)return;
+  document.querySelectorAll('[data-cms].editing').forEach(e=>e.classList.remove('editing'));
+  el.classList.add('editing');
+  currentEditEl=el;
+  currentEditKey=el.getAttribute('data-cms');
+  const label=el.getAttribute('data-cms-label')||'Rediger';
+  const type=el.getAttribute('data-cms-type')||'text';
+  const isHTML=type==='html';
+  const curVal=isHTML?el.innerHTML:el.textContent;
+
+  const pop=document.getElementById('editorPop');
+  document.getElementById('epTitle').textContent='✏ '+label;
+  const inp=document.getElementById('epInput');
+  inp.value=curVal;
+  inp.rows=isHTML||curVal.length>80?5:3;
+  document.getElementById('epToolbar').style.display=isHTML?'flex':'none';
+  pop.classList.add('open');
+
+  // Use fixed positioning (viewport-relative — no scroll offset needed)
+  const rect=el.getBoundingClientRect();
+  const popW=420;
+  const popH=pop.offsetHeight||240;
+  let top=rect.bottom+8;
+  let left=rect.left;
+  // Clamp horizontally
+  if(left+popW>window.innerWidth-12)left=window.innerWidth-popW-12;
+  if(left<8)left=8;
+  // If clips bottom, show above element instead
+  if(top+popH>window.innerHeight-16)top=Math.max(8,rect.top-popH-8);
+  // If still clips (very small screen), center vertically
+  if(top<8)top=Math.max(8,window.innerHeight/2-popH/2);
+  pop.style.top=top+'px';
+  pop.style.left=left+'px';
+
+  setTimeout(()=>inp.focus(),30);
+}
+
+function closeEditor(){
+  document.getElementById('editorPop').classList.remove('open');
+  document.querySelectorAll('[data-cms].editing').forEach(e=>e.classList.remove('editing'));
+  currentEditEl=null;currentEditKey=null;
+}
+
+function applyEdit(){
+  if(!currentEditEl||!currentEditKey)return;
+  const val=document.getElementById('epInput').value;
+  const type=currentEditEl.getAttribute('data-cms-type')||'text';
+  const oldVal=type==='html'?currentEditEl.innerHTML:currentEditEl.textContent;
+
+  // Undo history
+  pushHistory({key:currentEditKey,oldVal,newVal:val,type,elId:currentEditEl.id});
+
+  // Apply
+  if(type==='html')currentEditEl.innerHTML=val;
+  else currentEditEl.textContent=val;
+
+  // Sync logo to footer
+  if(currentEditKey==='siteLogo'){
+    document.getElementById('footLogo').textContent=val;
+  }
+
+  D[currentEditKey]=val;
+  closeEditor();
+  showToast('✓ Ændring gemt!','success');
+  autoSave();
+}
+
+/* HTML toolbar helpers */
+function wrapTag(tag,close){
+  const inp=document.getElementById('epInput');
+  const s=inp.selectionStart,e=inp.selectionEnd,v=inp.value;
+  const sel=v.substring(s,e);
+  if(tag==='br'){inp.value=v.substring(0,s)+'<br>'+v.substring(e);inp.setSelectionRange(s+4,s+4);}
+  else{
+    const wrapped=`<${tag}>${sel}</${tag}>`;
+    inp.value=v.substring(0,s)+wrapped+v.substring(e);
+    inp.setSelectionRange(s,s+wrapped.length);
+  }
+  inp.focus();
+}
+
+/* UNDO */
+function pushHistory(entry){
+  history=history.slice(0,historyIndex+1);
+  history.push(entry);
+  historyIndex=history.length-1;
+}
+function doUndo(){
+  if(historyIndex<0){showToast('Intet at fortryde','info');return;}
+  const entry=history[historyIndex--];
+  const el=document.getElementById(entry.elId);if(!el)return;
+  if(entry.type==='html')el.innerHTML=entry.oldVal;else el.textContent=entry.oldVal;
+  if(entry.key==='siteLogo'){
+    document.getElementById('footLogo').textContent=entry.oldVal;
+  }
+  D[entry.key]=entry.oldVal;
+  autoSave();
+  showToast('↩ Ændring fortrudt','info');
+}
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='z'){e.preventDefault();doUndo();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeEditor();});
+
+/* IMAGE UPLOAD */
+let imgTarget=null;
+function triggerImgUpload(type){
+  imgTarget=type;
+  document.getElementById('imgFileInput').click();
+}
+function handleImageUpload(input){
+  const f=input.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const src=e.target.result;
+    if(imgTarget==='hero'){D.heroImg=src;setImg('hero',src);}
+    else if(imgTarget==='about'){D.aboutImg=src;setImg('about',src);}
+    else if(imgTarget==='logo'){D.logoImg=src;setLogoImg(src);}
+    autoSave();
+    showToast('✓ Billede uploadet og gemt!','success');
+    input.value='';
+  };
+  r.readAsDataURL(f);
+}
+
+/* PLAN EDITOR */
+function getF(id){return Array.from(document.getElementById(id).querySelectorAll('li')).map(l=>l.textContent);}
+function renderF(id,arr){const ul=document.getElementById(id);ul.innerHTML='';arr.forEach(t=>{const li=document.createElement('li');li.textContent=t;ul.appendChild(li);});}
+
+function editPlan(n){
+  if(!cmsOn)return;
+  const modal=document.getElementById('planModal');
+  document.getElementById('planModalTitle').textContent='Rediger Pakke '+n;
+  const feats=(D['p'+n+'f']||getF('p'+n+'f'));
+  let featHtml=feats.map((f,i)=>`
+    <div class="feat-item" id="fi${n}_${i}">
+      <input type="text" value="${esc(f)}" id="fv${n}_${i}">
+      <button class="feat-rm" onclick="removeFeat(${n},${i})">✕</button>
+    </div>`).join('');
+  document.getElementById('planModalBody').innerHTML=`
+    <div style="margin-bottom:1.25rem">
+      <label style="font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mid);display:block;margin-bottom:.4rem;font-weight:600;">Features (punkter)</label>
+      <div id="featList${n}">${featHtml}</div>
+      <button class="feat-add" onclick="addFeat(${n})">+ Tilføj punkt</button>
+    </div>
+    <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(0,0,0,.07);">
+      <button onclick="closePlanModal()" style="padding:.65rem 1.25rem;background:none;border:1.5px solid rgba(36,88,160,.2);color:var(--ink-mid);border-radius:8px;cursor:pointer;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-family:'Outfit',sans-serif;">Annuller</button>
+      <button onclick="savePlan(${n})" style="padding:.65rem 1.5rem;background:var(--blue-mid);color:white;border:none;border-radius:8px;cursor:pointer;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:600;">Gem features</button>
+    </div>`;
+  modal.classList.add('show');
+}
+function addFeat(n){
+  const list=document.getElementById('featList'+n);
+  const idx=list.querySelectorAll('.feat-item').length;
+  const div=document.createElement('div');div.className='feat-item';div.id=`fi${n}_${idx}`;
+  div.innerHTML=`<input type="text" placeholder="Ny feature..." id="fv${n}_${idx}"><button class="feat-rm" onclick="removeFeat(${n},${idx})">✕</button>`;
+  list.appendChild(div);
+}
+function removeFeat(n,i){const el=document.getElementById(`fi${n}_${i}`);if(el)el.remove();}
+function savePlan(n){
+  const items=document.getElementById('featList'+n).querySelectorAll('input');
+  const arr=Array.from(items).map(i=>i.value.trim()).filter(Boolean);
+  renderF('p'+n+'f',arr);D['p'+n+'f']=arr;
+  autoSave();closePlanModal();
+  showToast('✓ Pakke opdateret!','success');
+}
+function closePlanModal(){document.getElementById('planModal').classList.remove('show');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* SAVE */
+function autoSave(){localStorage.setItem('cirkeline_v3',JSON.stringify(D));}
+function saveAll(){
+  autoSave();
+  showToast('💾 Alle ændringer gemt i browseren!','success');
+}
+
+// Close editor when clicking outside — use mousedown so it fires before click,
+// but only actually close if the click didn't land on a cms-ep button
+let _closeOnNext=false;
+document.addEventListener('mousedown',function(e){
+  if(!cmsOn)return;
+  const pop=document.getElementById('editorPop');
+  if(!pop.classList.contains('open'))return;
+  if(pop.contains(e.target))return; // inside popup — don't close
+  if(e.target.closest('[data-cms]'))return; // clicking another editable — openEditor handles it
+  _closeOnNext=true;
+});
+document.addEventListener('click',function(e){
+  if(_closeOnNext){_closeOnNext=false;closeEditor();}
+});
+
+/* ═══════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════ */
+(function(){
+  const ring=document.getElementById('cursor-ring');
+  const dot=document.getElementById('cursor-dot');
+  if(!ring||!dot)return;
+
+  let mx=window.innerWidth/2, my=window.innerHeight/2;
+  let rx=mx, ry=my;
+
+  // Move dot instantly, ring follows with slight lag
+  document.addEventListener('mousemove',function(e){
+    mx=e.clientX; my=e.clientY;
+    dot.style.left=mx+'px';
+    dot.style.top=my+'px';
+  });
+
+  // Smooth ring follow
+  function animateRing(){
+    rx+=(mx-rx)*.18;
+    ry+=(my-ry)*.18;
+    ring.style.left=rx+'px';
+    ring.style.top=ry+'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Enlarge on interactive elements
+  const interactives='a,button,input,select,textarea,label,[onclick],.pc-btn,.cal-nb,.slot,.cd';
+  document.addEventListener('mouseover',function(e){
+    if(e.target.closest(interactives))document.body.classList.add('cursor-hover');
+  });
+  document.addEventListener('mouseout',function(e){
+    if(e.target.closest(interactives))document.body.classList.remove('cursor-hover');
+  });
+
+  // Hide when leaving window
+  document.addEventListener('mouseleave',function(){
+    ring.style.opacity='0'; dot.style.opacity='0';
+  });
+  document.addEventListener('mouseenter',function(){
+    ring.style.opacity='1'; dot.style.opacity='1';
+  });
+})();
+</script>
+</body>
+</html>
